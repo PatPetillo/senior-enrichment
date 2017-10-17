@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import RemoveStudent from './RemoveStudent'
 
 export default class AllCampuses extends Component {
   constructor () {
@@ -17,16 +19,21 @@ export default class AllCampuses extends Component {
 
   render () {
     const students = this.state.students;
-
+    console.log(this.state)
     return (
       <div>
-      <br />
+        <br />
+        <Link to="/addStudent">
+          <button type="button">Add A Student</button>
+        </Link>
+        <br />
           {
             <table>
               <tr>
-                <th>#</th>
+                <th>Student ID</th>
                 <th>Name</th>
                 <th>Campus</th>
+                <th>EXPEL</th>
               </tr>
               {
                 students.map(student => {
@@ -34,12 +41,13 @@ export default class AllCampuses extends Component {
                     <tr key={student.id}>
                       <td>{ student.id }</td>
                       <td>{ student.name }</td>
-                      <td>{ student.campusId }</td>
+                      <td>{ student.campus.name }</td>
+                      <td><RemoveStudent studentToDelete={student.id} /></td>
                     </tr>
                   );
                 })
               }
-            </table> 
+            </table>
           }
       </div>
     );
