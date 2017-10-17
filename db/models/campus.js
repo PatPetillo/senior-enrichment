@@ -7,7 +7,8 @@ const Campus = db.define('campus', {
     type: Sequelize.STRING
   },
   image: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: './campuses/fullstack.jpg'
   }
 })
 
