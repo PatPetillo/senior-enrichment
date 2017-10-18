@@ -27,6 +27,7 @@ export default class AllCampuses extends Component {
           <button type="button">Add Student</button>
         </Link>
         <br />
+        <br />
           {
             <table>
               <tbody>
@@ -40,9 +41,13 @@ export default class AllCampuses extends Component {
                 {
                   students.map(student => {
                     return (
-                      <tr key={student.id}>
+                      <tr key={ student.id }>
                         <td>{ student.id }</td>
-                        <td>{ student.name }</td>
+                        <td>
+                          <Link to={ `/students/${ student.id }` }>
+                            { student.name }
+                          </Link>
+                        </td>
                         <td>{ student.campus.name }</td>
                         <td><RemoveStudent studentToDelete={student.id} /></td>
                         <td>

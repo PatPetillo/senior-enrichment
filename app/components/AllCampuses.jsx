@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import RemoveCampus from './RemoveCampus';
 
 export default class AllCampuses extends Component {
   constructor () {
@@ -22,13 +24,22 @@ export default class AllCampuses extends Component {
       <div>
         <h2>Margaret Hamilton Interplanetary Academy of JavaScript</h2>
         <div>
+          <Link to="/addCampus">
+            <button type="button">Add Campus</button>
+          </Link>
+          <br />
           <br />
           {
             campuses.length && campuses.map(campus => {
               return (
-                <div key={campus.id}>
-                  <div>{campus.name}</div>
-                  <div> <img src={`${campus.image}`} alt="Academy of Javascript Campus" height="450px" width="800px" /></div>
+                <div key={ campus.id }>
+                  <Link to={ `/campuses/${ campus.id }` }>
+                    <div>{campus.name}</div>
+                  </Link> 
+                  <RemoveCampus campusToDelete={campus.id} />
+                  <Link to={ `/campuses/${ campus.id }` }> 
+                    <div> <img src={`${campus.image}`} alt="Academy of Javascript Campus" height="450px" width="800px" /></div>
+                  </Link>
                   <br />
                 </div>
               );

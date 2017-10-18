@@ -1,5 +1,6 @@
 const api = require('express').Router()
-const Student = require('../../db/models').Student;
+const { Student } = require('../../db/models')
+const { Campus } = require('../../db/models')
 
 api.get('/', (req, res, next) => {
   Student.findAll({ include: [{ all: true }] })
@@ -11,11 +12,16 @@ api.get('/', (req, res, next) => {
 
 api.get('/:id', (req, res, next) => {
   let studentId = req.params.id;
-  Student.findById(studentId)
-    .then(student => {
-      res.json(student);
-    })
-    .catch(next);
+  Student.findOne({
+		include: [{ model: Campus }],
+		where: {
+			id: studentId
+		}
+	})
+	.then(campus => {
+		res.json(campus)
+	})
+  .catch(next);
 })
 
 api.post('/', (req, res, next) => {

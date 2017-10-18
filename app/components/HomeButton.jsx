@@ -5,7 +5,10 @@ const HomeButton = () => {
     return (
       <div>
         <Link to="/">
-          <button type="button">Home/Campuses</button>
+          <button type="button">Home</button>
+        </Link>
+        <Link to="/campuses">
+          <button type="button">Campuses</button>
         </Link>
         <Link to="/students">
           <button type="button">Students</button>
