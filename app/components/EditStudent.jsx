@@ -60,7 +60,7 @@ export default class EditStudent extends Component {
   render () {
     const campuses = this.state.campuses;
     const student = this.state.student;
-
+    console.log(student.campusId)
     return (
       <div>
         <br />
@@ -72,8 +72,8 @@ export default class EditStudent extends Component {
           E-Mail: <br />
           <input type="text" name="studentEmail" placeholder={ `${ student.email }` } onChange={ this.handleChange } /><br />
           Select A Campus: <br />
-          <select selected={ `${ student.campusId }` } name="selectedCampus" form="Campuses" onChange={ this.handleChange }>
-            <option disabled="disabled"> Campuses </option>
+          <select name="selectedCampus" form="Campuses" onChange={ this.handleChange }>
+            <option selected="true" disabled="disabled"> Campuses </option>
             {
               campuses.length && campuses.map(campus => {
                 return (

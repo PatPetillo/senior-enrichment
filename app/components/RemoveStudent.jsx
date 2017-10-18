@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+// import history from '../history';
 
 export default class RemoveStudent extends Component {
   constructor(props) {
@@ -12,14 +13,14 @@ export default class RemoveStudent extends Component {
 
   removeStudent () {
     const id = this.state.studentToDelete;
-    console.log(id)
     axios.delete(`/api/students/${id}`)
       .then(res => res.data)
   }
 
-  render (){
+
+  render () {
     return (
-      <button onClick={this.removeStudent}>EXPEL</button>
+      <button onClick={ this.removeStudent }>EXPEL</button>
     )
   }
 }
