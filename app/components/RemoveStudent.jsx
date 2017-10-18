@@ -4,7 +4,6 @@ import axios from 'axios';
 export default class RemoveStudent extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       studentToDelete: props.studentToDelete
     }
@@ -20,7 +19,7 @@ export default class RemoveStudent extends Component {
 
   render (){
     return (
-      <button onClick={this.removeStudent}>X</button>
+      <button onClick={this.removeStudent}>EXPEL</button>
     )
   }
 }

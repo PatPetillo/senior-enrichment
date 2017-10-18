@@ -24,6 +24,15 @@ api.post('/', (req, res, next) => {
     .catch(next)
 })
 
+api.put('/:id', (req, res, next) => {
+  let studentId = Number(req.params.id);
+  Student.findById(studentId)
+  .then(student => {
+    student.update(req.body)
+  })
+  .catch(next)
+})
+
 api.delete('/:id', (req, res, next) => {
   let studentId = Number(req.params.id);
   Student.findById(studentId)
@@ -32,5 +41,6 @@ api.delete('/:id', (req, res, next) => {
   })
   .catch(next)
 })
+
 
 module.exports = api;
