@@ -43,7 +43,7 @@ export default class AddStudent extends Component {
         <br />
         <form onSubmit={ this.handleSubmit }>
         {/* <input type="hidden" name="redirect" value="/students" /> */}
-          Add Student <br />
+          <div> Add Student </div>
           <br />
           Student Name: <br />
           <input type="text" name="studentName" placeholder="Student Name" onChange={ this.handleChange } /><br />
