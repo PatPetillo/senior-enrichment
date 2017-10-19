@@ -25,7 +25,7 @@ export default class Student extends Component {
     const student = this.state.student;
     const campus = this.state.campus;
     return (
-      <div>
+      <div className="container">
         <br />
           <table>
             <tbody>

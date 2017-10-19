@@ -51,8 +51,15 @@ export default class EditStudent extends Component {
   }
 
   handleSubmit (evt) {
-    let id = this.state.student.id
-    axios.put(`/api/students/${id}`, { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.selectedCampus })
+    let id = this.state.student.id;
+    let studentToEdit = {}
+
+    //If user does not edit the input field do not submit a change to the server.    
+    if (this.state.studentName) studentToEdit.name = this.state.studentName;
+    if (this.state.studentEmail) studentToEdit.email = this.state.studentEmail;
+    if (this.state.selectedCampus) studentToEdit.campusId = this.state.selectedCampus;
+    
+    axios.put(`/api/students/${id}`, studentToEdit)
       .then(res => res.data)
     evt.preventDefault();
   }
@@ -60,9 +67,8 @@ export default class EditStudent extends Component {
   render () {
     const campuses = this.state.campuses;
     const student = this.state.student;
-    console.log(student.campusId)
     return (
-      <div>
+      <div className="container">
         <br />
         <form onSubmit={ this.handleSubmit }>
           <div>Edit Student: { student.name } </div>

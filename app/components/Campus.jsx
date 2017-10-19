@@ -11,7 +11,7 @@ export default class Campus extends Component {
     };
   }
 
-  componentWillMount () {
+  componentDidMount () {
     const id = this.props.match.params.campusId
     axios.get(`/api/campuses/${id}`)
       .then(res => res.data)
@@ -25,12 +25,15 @@ export default class Campus extends Component {
     const campus = this.state.campus;
     const students = this.state.students;
     return (
-      <div>
+      <div className="container">
         <h2>Margaret Hamilton Interplanetary Academy of JavaScript</h2>
-        <div><img src={`../${campus.image}` } alt="Academy of Javascript Campus" height="350px" width="600px" /></div>
+        <div><img src={`../${ campus.image }` } alt="Academy of Javascript Campus" height="350px" width="600px" /></div>
         <div>
             <div key={ campus.id }>
               <h3>{ campus.name }</h3>
+              <Link to={`/editCampus/${ campus.id }`} >
+                <button>EDIT CAMPUS</button>
+              </Link>
               <h4>List of Students at { `${ campus.name }`  }:</h4>
               <table>
                 <tbody>

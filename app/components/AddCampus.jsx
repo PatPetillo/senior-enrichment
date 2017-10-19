@@ -31,7 +31,7 @@ export default class AddCampus extends Component {
   render () {
     const campuses = this.state.campuses;
     return (
-      <div>
+      <div className="container">
         <br />
         <form onSubmit={ this.handleSubmit }>
           <div> Add Campus </div>
