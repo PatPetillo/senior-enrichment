@@ -31,6 +31,9 @@ export default class AddStudent extends Component {
   }
 
   handleSubmit (evt) {
+    if (!this.state.selectedCampus){
+      alert('Please select a Campus');
+    }
     axios.post('/api/students', { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.selectedCampus })
       .then(res => res.data)
     evt.preventDefault();
@@ -39,11 +42,10 @@ export default class AddStudent extends Component {
   render () {
     const campuses = this.state.campuses;
     return (
-      <div>
+      <div className="container">
         <br />
         <form onSubmit={ this.handleSubmit }>
-        {/* <input type="hidden" name="redirect" value="/students" /> */}
-          <div> Add Student </div>
+          <div>Add Student</div>
           <br />
           Student Name: <br />
           <input type="text" name="studentName" placeholder="Student Name" onChange={ this.handleChange } /><br />

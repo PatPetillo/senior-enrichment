@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import RemoveCampus from './RemoveCampus';
+import EditCampus from './EditCampus';
 
 export default class AllCampuses extends Component {
   constructor () {
@@ -21,7 +22,7 @@ export default class AllCampuses extends Component {
     const campuses = this.state.campuses;
 
     return (
-      <div>
+      <div className="container">
         <h2>Margaret Hamilton Interplanetary Academy of JavaScript</h2>
         <div>
           <Link to="/addCampus">
@@ -37,6 +38,9 @@ export default class AllCampuses extends Component {
                     <div>{campus.name}</div>
                   </Link> 
                   <RemoveCampus campusToDelete={campus.id} />
+                  <Link to={`/editCampus/${ campus.id }`} >
+                    <button>EDIT CAMPUS</button>
+                  </Link>
                   <Link to={ `/campuses/${ campus.id }` }> 
                     <div> <img src={`${campus.image}`} alt="Academy of Javascript Campus" height="450px" width="800px" /></div>
                   </Link>

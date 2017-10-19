@@ -16,6 +16,7 @@ module.exports = app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
   .use(express.static(resolve(__dirname, '..', 'public'))) // Serve static files from ../public
+  .use(express.static(resolve(__dirname, '..', 'node_modules')))
   .use('/api', require('./api')) // Serve our api
   .get('/*', (_, res) => res.sendFile(resolve(__dirname, '..', 'public', 'index.html'))) // Send index.html for any other requests.
 
@@ -34,7 +35,7 @@ if (module === require.main) {
           ~ To help compare these objects, reference each of their `id` attributes
   */
 
-  const PORT = 1111
+  const PORT = 1234
 
   const db = require('../db')
   db.sync({ force: false })

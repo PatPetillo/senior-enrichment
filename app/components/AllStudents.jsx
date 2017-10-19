@@ -21,7 +21,7 @@ export default class AllCampuses extends Component {
   render () {
     const students = this.state.students;
     return (
-      <div>
+      <div className="container">
         <br />
         <Link to="/addStudent">
           <button type="button">Add Student</button>

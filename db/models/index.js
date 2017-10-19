@@ -5,6 +5,6 @@ const Campus = require('./campus')
 
 
 Student.belongsTo(Campus);
-Campus.hasMany(Student);
+Campus.hasMany(Student, { onDelete: 'cascade', hooks: true });
 
 module.exports = { Student, Campus, db }
