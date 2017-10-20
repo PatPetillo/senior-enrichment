@@ -3,7 +3,7 @@ const { Campus } = require('../../db/models')
 const { Student } = require('../../db/models')
 
 api.get('/', (req, res, next) => {
-  Campus.findAll()
+  Campus.findAll({ include: [{ all: true }] })
     .then(students => {
       res.json(students);
     })

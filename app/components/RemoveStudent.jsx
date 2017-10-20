@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { removeStudent } from '../reducers/students'
 // import history from '../history';
 
-export default class RemoveStudent extends Component {
+class RemoveStudent extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      studentToDelete: props.studentToDelete
-    }
-    this.removeStudent = this.removeStudent.bind(this)
+    this.removeSingleStudent = this.removeSingleStudent.bind(this)
   }
 
-  removeStudent () {
-    const id = this.state.studentToDelete;
-    axios.delete(`/api/students/${id}`)
-      .then(res => res.data)
+  removeSingleStudent () {
+    const id = this.props.studentToDelete;
+    this.props.removeStudent(id);
   }
-
 
   render () {
     return (
-      <button onClick={ this.removeStudent }>EXPEL</button>
+      <button onClick={ this.removeSingleStudent }>EXPEL</button>
     )
   }
 }
+
+const mapState = state => {
+  return {
+    state: state
+  }
+}
+
+const mapDispatch = { removeStudent };
+
+//passing the state and the action to the reducer
+export default connect(mapState, mapDispatch)(RemoveStudent);
+

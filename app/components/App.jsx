@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import React from 'react';
+import React, { Component } from 'react';
 import AllStudents from './AllStudents';
 import Student from './Student';
 import AddStudent from './AddStudent';
@@ -11,8 +11,18 @@ import Root from './Root';
 import Home from './Home';
 import AddCampus from './AddCampus';
 import EditCampus from './EditCampus';
+import { fetchStudents } from '../reducers/students';
+import { fetchCampuses } from '../reducers/campuses';
+import store from '../store'
 
-const App = () => {
+class App extends Component {
+
+  componentDidMount () {
+    store.dispatch(fetchStudents());
+    store.dispatch(fetchCampuses());
+  }
+
+  render () {
     return (
       <div>
         <Router>
@@ -37,6 +47,16 @@ const App = () => {
         </Router>
       </div>
     )
+  }
 }
+
+// const mapProps = null;
+
+// const mapDispatch = dispatch => ({
+//   fetchInitialData: () => {
+//     dispatch(fetchStudents());
+//     // what other data might we want to fetch on app load?
+//   }
+// });
 
 export default App;
