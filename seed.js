@@ -8,19 +8,19 @@ db.sync({ force: true })
     return Campus.bulkCreate([
       {
         name: 'Citadel Of Ricks',
-        image: './campuses/citadelOfRicks.jpg'
+        image: '/campuses/citadelOfRicks.jpg'
       }, {
         name: "King Kai's Planet",
-        image: './campuses/KingKaisPlanet.png'
+        image: '/campuses/KingKaisPlanet.png'
       }, {
         name: 'Harry Herpson High School',
-        image: './campuses/harryHerpson.jpg'
+        image: '/campuses/harryHerpson.jpg'
       }, {
         name: 'Fullstack Academy',
-        image: './campuses/fullstack.jpg'
+        image: '/campuses/fullstack.jpg'
       }, {
         name: 'P.S. 118',
-        image: './campuses/ps118.jpg'
+        image: '/campuses/ps118.jpg'
       }
     ])
   })

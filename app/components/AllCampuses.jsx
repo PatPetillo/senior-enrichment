@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RemoveCampus from './RemoveCampus';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 const AllCampuses = (props) => {
     const campuses = props.state.campuses;
@@ -45,4 +46,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, null)(AllCampuses);
+export default withRouter(connect(mapState, null)(AllCampuses));

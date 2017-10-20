@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import history from '../history';
+import { withRouter } from 'react-router'; 
 
-export default class EditCampus extends Component {
+class EditCampus extends Component {
   constructor () {
     super();
     this.state = {
@@ -23,7 +25,8 @@ export default class EditCampus extends Component {
     const id = this.props.match.params.campusId
     axios.get(`/api/campuses/${id}`)
       .then(res => res.data)
-      .then(campus => this.setState({ campus: campus }));
+      .then(campus => this.setState({ campus: campus }))
+      .catch((error) => console.error('Error', error))
   }
 
   handleChange(evt) {
@@ -45,13 +48,17 @@ export default class EditCampus extends Component {
 
     axios.put(`/api/campuses/${id}`, campusToEdit)
       .then(res => res.data)
+      .catch((error) => console.error('Error', error))
     evt.preventDefault();
+    history.push('/campuses')
   }
 
   handleStudentSubmit (evt) {
     axios.post('/api/students', { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.campus.id })
-    .then(res => res.data)
+      .then(res => res.data)
+      .catch((error) => console.error('Error', error))
     evt.preventDefault();
+    history.push('/students')
   }
 
   render () {
@@ -87,3 +94,5 @@ export default class EditCampus extends Component {
     );
   }
 }
+
+export default withRouter(EditCampus);

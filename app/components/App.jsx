@@ -25,7 +25,7 @@ class App extends Component {
   render () {
     return (
       <div>
-        <Router>
+        <Router history={ history }>
           <div>
             <div>
               <HomeButton />
@@ -34,6 +34,7 @@ class App extends Component {
               {/* <Route exact path="/" render={ (routeProps) => <AllCampuses routeProps={ routeProps } />} /> */}
               <Route exact path="/" component={ Home } />
               <Route exact path="/campuses" component={ AllCampuses } />
+              <Route exact path="/campuses/" component={ AllCampuses } />
               <Route exact path="/campuses/:campusId" component={ Campus } />
               <Route exact path="/editCampus/:campusId" component={ EditCampus } />
               <Route exact path="/addCampus" component={ AddCampus } />

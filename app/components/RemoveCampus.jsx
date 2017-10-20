@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { removeCampus } from '../reducers/campuses';
 
-export default class RemoveCampus extends Component {
+class RemoveCampus extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      campusToDelete: props.campusToDelete
-    }
+
     this.removeCampus = this.removeCampus.bind(this)
   }
 
   removeCampus () {
-    const id = this.state.campusToDelete;
-    axios.delete(`/api/campuses/${id}`)
-      .then(res => res.data)
+    const id = this.props.campusToDelete;
+    this.props.removeCampus(id);
   }
 
 
@@ -23,3 +21,14 @@ export default class RemoveCampus extends Component {
     )
   }
 }
+
+const mapState = state => {
+  return {
+    state: state
+  }
+}
+
+const mapDispatch = { removeCampus };
+
+//passing the state and the action to the reducer
+export default connect(mapState, mapDispatch)(RemoveCampus);

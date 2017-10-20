@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RemoveStudent from './RemoveStudent';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 const AllStudents = (props) => {
     const students = props.state.students;
@@ -58,4 +59,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, null)(AllStudents);
+export default withRouter(connect(mapState, null)(AllStudents));

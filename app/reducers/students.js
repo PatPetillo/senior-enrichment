@@ -32,7 +32,7 @@ export const fetchStudents = () => dispatch => {
 }
 
 export const removeStudent = (id) => dispatch => {
-    axios.delete(`/api/campuses/${id}`)
+    axios.delete(`/api/students/${id}`)
       .then(res => res.data)
       .then(dispatch(remove(id)))
       .catch(err => console.error('Deleting students failed', err))
