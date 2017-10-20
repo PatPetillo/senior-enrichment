@@ -48,5 +48,9 @@ api.delete('/:id', (req, res, next) => {
   .catch(next)
 })
 
+api.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('There was an Express error.')
+})
 
 module.exports = api;

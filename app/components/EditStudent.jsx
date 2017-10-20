@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import history from '../history';
+import { withRouter } from 'react-router';
 
-export default class EditStudent extends Component {
+class EditStudent extends Component {
   constructor () {
     super();
     this.state = {
@@ -16,20 +18,7 @@ export default class EditStudent extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-    //chained axios.get requests updated with an axios.all below
-    // componentDidMount () {
-    //   const id = this.props.match.params.studentId
-    //   axios.get('/api/campuses')
-    //   .then(res => res.data)
-    //   .then(campuses => this.setState({ campuses }))
-    //   .then(() => {
-    //     axios.get(`/api/students/${id}`)
-    //     .then(res => res.data)
-    //     .then(student => this.setState({ student }))
-    //   })
-    //   .catch(error => console.error(error))
-    // }
-
+  
   componentDidMount () {
     const id = this.props.match.params.studentId
     axios.all([
@@ -39,6 +28,7 @@ export default class EditStudent extends Component {
     .then(axios.spread((campuses, student) => {
       this.setState({ campuses: campuses.data, student: student.data })
     }))
+    .catch((error) => console.error('Error', error))
   }
 
   handleChange(evt) {
@@ -61,7 +51,9 @@ export default class EditStudent extends Component {
     
     axios.put(`/api/students/${id}`, studentToEdit)
       .then(res => res.data)
+      .catch((error) => console.error('Error', error))
     evt.preventDefault();
+    history.push('/students')
   }
 
   render () {
@@ -95,3 +87,5 @@ export default class EditStudent extends Component {
     );
   }
 }
+
+export default withRouter(EditStudent);

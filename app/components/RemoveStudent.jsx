@@ -6,6 +6,7 @@ import { removeStudent } from '../reducers/students'
 class RemoveStudent extends Component {
   constructor(props) {
     super(props)
+    
     this.removeSingleStudent = this.removeSingleStudent.bind(this)
   }
 
