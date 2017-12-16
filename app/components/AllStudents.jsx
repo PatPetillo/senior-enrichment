@@ -1,25 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import RemoveStudent from './RemoveStudent';
+import { connect } from 'react-redux';
 
+const AllStudents = (props) => {
+    const students = props.students;
 
-export default class AllCampuses extends Component {
-  constructor () {
-    super();
-    this.state = {
-      students: []
-    };
-  }
-
-  componentDidMount () {
-    axios.get('/api/students')
-      .then(res => res.data)
-      .then(students => this.setState({ students }));
-  }
-
-  render () {
-    const students = this.state.students;
     return (
       <div className="container">
         <br />
@@ -40,6 +26,7 @@ export default class AllCampuses extends Component {
                 </tr>
                 {
                   students.map(student => {
+                    console.log(student)
                     return (
                       <tr key={ student.id }>
                         <td>{ student.id }</td>
@@ -64,5 +51,10 @@ export default class AllCampuses extends Component {
           }
       </div>
     );
-  }
 }
+
+const mapState = ({ students }) => ({ students });
+
+const mapDispatch = {};
+
+export default connect(mapState, mapDispatch)(AllStudents);
