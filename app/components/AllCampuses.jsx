@@ -1,25 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import RemoveCampus from './RemoveCampus';
-import EditCampus from './EditCampus';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-export default class AllCampuses extends Component {
-  constructor () {
-    super();
-    this.state = {
-      campuses: []
-    };
-  }
-
-  componentDidMount () {
-    axios.get('/api/campuses')
-      .then(res => res.data)
-      .then(campuses => this.setState({ campuses }));
-  }
-
-  render () {
-    const campuses = this.state.campuses;
+const AllCampuses = (props) => {
+    const campuses = props.state.campuses;
 
     return (
       <div className="container">
@@ -35,14 +21,14 @@ export default class AllCampuses extends Component {
               return (
                 <div key={ campus.id }>
                   <Link to={ `/campuses/${ campus.id }` }>
-                    <div>{campus.name}</div>
+                    <div>{ campus.name }</div>
                   </Link> 
                   <RemoveCampus campusToDelete={campus.id} />
                   <Link to={`/editCampus/${ campus.id }`} >
                     <button>EDIT CAMPUS</button>
                   </Link>
                   <Link to={ `/campuses/${ campus.id }` }> 
-                    <div> <img src={`${campus.image}`} alt="Academy of Javascript Campus" height="450px" width="800px" /></div>
+                    <div> <img src={`${ campus.image }`} alt="Academy of Javascript Campus" height="450px" width="800px" /></div>
                   </Link>
                   <br />
                 </div>
@@ -52,5 +38,12 @@ export default class AllCampuses extends Component {
         </div>
       </div>
     );
+}
+
+const mapState = state => {
+  return {
+    state: state
   }
 }
+
+export default withRouter(connect(mapState, null)(AllCampuses));

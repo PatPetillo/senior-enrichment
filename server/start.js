@@ -35,12 +35,14 @@ if (module === require.main) {
           ~ To help compare these objects, reference each of their `id` attributes
   */
 
-  const PORT = 1234
+  const PORT = 1337
 
-  const db = require('../db')
-  db.sync({ force: false })
-  .then(() => {
-    console.log('db synced')
-    app.listen(PORT, () => console.log(`server listening on port ${PORT}`))
-  });
+  app.listen(PORT, () => console.log(`server listening on port ${PORT}`))
+  
+  // const db = require('../db')
+  // db.sync({ force: false })
+  // .then(() => {
+  //   console.log('db synced')
+  //   app.listen(PORT, () => console.log(`server listening on port ${PORT}`))
+  // });
 }

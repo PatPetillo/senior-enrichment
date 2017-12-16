@@ -3,7 +3,7 @@ const { Campus } = require('../../db/models')
 const { Student } = require('../../db/models')
 
 api.get('/', (req, res, next) => {
-  Campus.findAll()
+  Campus.findAll({ include: [{ all: true }] })
     .then(students => {
       res.json(students);
     })
@@ -30,6 +30,15 @@ api.post('/', (req, res, next) => {
     .catch(next)
 })
 
+api.put('/:id', (req, res, next) => {
+  let campusId = Number(req.params.id);
+  Campus.findById(campusId)
+  .then(campus => {
+    campus.update(req.body)
+  })
+  .catch(next)
+})
+
 api.delete('/:id', (req, res, next) => {
   let campusId = Number(req.params.id);
   Campus.findById(campusId)
@@ -37,6 +46,11 @@ api.delete('/:id', (req, res, next) => {
     campus.destroy()
   })
   .catch(next)
+})
+
+api.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('There was an Express error.')
 })
 
 module.exports = api;
