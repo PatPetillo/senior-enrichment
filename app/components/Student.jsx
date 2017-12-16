@@ -7,8 +7,7 @@ const Student = (props) => {
   const id = Number(props.match.params.studentId);
   const student = students.filter((studentById) => {
     return studentById.id === id
-  })[0];
-  const campus = student.campus;
+  })
 
   return (
     <div className="container">
@@ -21,12 +20,12 @@ const Student = (props) => {
                 <th>Campus</th>
                 <th>EDIT</th>
               </tr>
-              <tr key={student.id}>
-                <td>{ student.id }</td>
-                <td>{ student.name }</td>
-                <td>{ campus.name }</td>
+              <tr key={student.length && student[0].id}>
+                <td>{ student.length && student[0].id }</td>
+                <td>{ student.length && student[0].name }</td>
+                <td>{ student.length && student[0].campus.name }</td>
                 <td>
-                  <Link to={`/editStudent/${ student.id }`}>
+                  <Link to={`/editStudent/${ student[0].id }`}>
                     <button>EDIT</button>
                   </Link>
                 </td>
@@ -43,4 +42,6 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState, null)(Student);
+const mapDispatch = {};
+
+export default connect(mapState, mapDispatch)(Student);

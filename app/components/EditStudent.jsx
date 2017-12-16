@@ -1,34 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import history from '../history';
+import { connect } from 'react-redux';
+import { updateStudent } from '../reducers/students';
 import { withRouter } from 'react-router';
 
 class EditStudent extends Component {
   constructor () {
     super();
     this.state = {
-      campuses: [],
-      student: {},
-      studentId: '',
-      studentName: '',
-      studentEmail: '',
-      selectedCampus: ''
+      name: '',
+      email: '',
+      campusId: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  
-  componentDidMount () {
-    const id = this.props.match.params.studentId
-    axios.all([
-      axios.get('/api/campuses'),
-      axios.get(`/api/students/${id}`)
-    ])
-    .then(axios.spread((campuses, student) => {
-      this.setState({ campuses: campuses.data, student: student.data })
-    }))
-    .catch((error) => console.error('Error', error))
   }
 
   handleChange(evt) {
@@ -41,39 +28,43 @@ class EditStudent extends Component {
   }
 
   handleSubmit (evt) {
-    let id = this.state.student.id;
-    let studentToEdit = {}
-
-    //If user does not edit the input field do not submit a change to the server.    
-    if (this.state.studentName) studentToEdit.name = this.state.studentName;
-    if (this.state.studentEmail) studentToEdit.email = this.state.studentEmail;
-    if (this.state.selectedCampus) studentToEdit.campusId = this.state.selectedCampus;
-    
-    axios.put(`/api/students/${id}`, studentToEdit)
-      .then(res => res.data)
-      .catch((error) => console.error('Error', error))
     evt.preventDefault();
-    history.push('/students')
+    // let id = this.state.student.id;
+    // let studentToEdit = {}
+    // //If user does not edit the input field do not submit a change to the server.    
+    // if (this.state.studentName) studentToEdit.name = this.state.studentName;
+    // if (this.state.studentEmail) studentToEdit.email = this.state.studentEmail;
+    // if (this.state.selectedCampus) studentToEdit.campusId = this.state.selectedCampus;
+    const id = Number(this.props.match.params.studentId)
+    const studentToUpdate = this.props.students.filter(student => {
+      return student.id == id;
+    })[0]
+
+    this.props.updateStudent(studentToUpdate, this.state, this.props.history);
   }
 
   render () {
-    const campuses = this.state.campuses;
-    const student = this.state.student;
+    const campuses = this.props.campuses;
+    const id = Number(this.props.match.params.studentId)
+    const studentToUpdate = this.props.students.filter(student => {
+      return student.id == id;
+    })[0]
+    
     return (
       <div className="container">
         <br />
         <form onSubmit={ this.handleSubmit }>
-          <div>Edit Student: { student.name } </div>
+          <div>Edit Student: { studentToUpdate.name } </div>
           <br />
           Student Name: <br />
-          <input type="text" name="studentName" placeholder={ `${ student.name }` } onChange={ this.handleChange } /><br />
+          <input type="text" name="name" placeholder={ `${ studentToUpdate.name }` } onChange={ this.handleChange } /><br />
           E-Mail: <br />
-          <input type="text" name="studentEmail" placeholder={ `${ student.email }` } onChange={ this.handleChange } /><br />
+          <input type="text" name="email" placeholder={ `${ studentToUpdate.email }` } onChange={ this.handleChange } /><br />
           Select A Campus: <br />
-          <select name="selectedCampus" form="Campuses" onChange={ this.handleChange }>
+          <select name="campusId" form="Campuses" onChange={ this.handleChange }>
             <option selected="true" disabled="disabled"> Campuses </option>
             {
-              campuses.length && campuses.map(campus => {
+              this.props.campuses.map(campus => {
                 return (
                   <option value={ campus.id } key={ campus.id }>{ campus.name }</option>
                 );
@@ -88,4 +79,7 @@ class EditStudent extends Component {
   }
 }
 
-export default withRouter(EditStudent);
+// export default withRouter(EditStudent);
+const mapState = ({ students, campuses }) => ({ students, campuses });
+const mapDispatch = { updateStudent };
+export default withRouter(connect(mapState, mapDispatch)(EditStudent));

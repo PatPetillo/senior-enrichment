@@ -25,7 +25,7 @@ class App extends Component {
   render () {
     return (
       <div>
-        <Router history={ history }>
+        <Router>
           <div>
             <div>
               <HomeButton />
