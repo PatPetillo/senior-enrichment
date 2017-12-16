@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RemoveStudent from './RemoveStudent';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 const AllStudents = (props) => {
-    const students = props.state.students;
+    const students = props.students;
 
     return (
       <div className="container">
@@ -27,6 +26,7 @@ const AllStudents = (props) => {
                 </tr>
                 {
                   students.map(student => {
+                    console.log(student)
                     return (
                       <tr key={ student.id }>
                         <td>{ student.id }</td>
@@ -53,10 +53,8 @@ const AllStudents = (props) => {
     );
 }
 
-const mapState = state => {
-  return {
-    state: state
-  }
-}
+const mapState = ({ students }) => ({ students });
 
-export default withRouter(connect(mapState, null)(AllStudents));
+const mapDispatch = {};
+
+export default connect(mapState, mapDispatch)(AllStudents);

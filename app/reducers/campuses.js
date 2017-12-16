@@ -12,7 +12,6 @@ const remove = id => ({ type: REMOVE, id })
 //REDUCERS
 export default function reducer(campuses = [], action) {
   switch (action.type) {
-
     case INITIALIZE:
       return action.campuses;
 

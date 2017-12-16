@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import history from '../history';
+import { connect } from 'react-redux';
+import { createStudent } from '../reducers/students';
+import { withRouter } from 'react-router';
 
-export default class AddStudent extends Component {
-  constructor () {
+class AddStudent extends Component {
+  constructor() {
     super();
     this.state = {
-      campuses: [],
-      studentName: '',
-      studentEmail: '',
-      selectedCampus: ''
-    }
+      name: '',
+      email: '',
+      campusId: '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     axios.get('/api/campuses')
       .then(res => res.data)
       .then(campuses => this.setState({ campuses }));
@@ -26,40 +29,38 @@ export default class AddStudent extends Component {
     const name = evt.target.name;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
-  handleSubmit (evt) {
-    if (!this.state.selectedCampus){
+  handleSubmit(evt) {
+    evt.preventDefault();
+    if (!this.state.selectedCampus) {
       alert('Please select a Campus');
     }
-    axios.post('/api/students', { name: this.state.studentName, email: this.state.studentEmail, campusId: this.state.selectedCampus })
-      .then(res => res.data)
-    evt.preventDefault();
+
+    this.props.addStudent(this.state, this.props.history);
   }
 
-  render () {
-    const campuses = this.state.campuses;
+  render() {
+    const campuses = this.props.campuses;
     return (
       <div className="container">
         <br />
-        <form onSubmit={ this.handleSubmit }>
+        <form onSubmit={this.handleSubmit}>
           <div>Add Student</div>
           <br />
           Student Name: <br />
-          <input type="text" name="studentName" placeholder="Student Name" onChange={ this.handleChange } /><br />
+          <input type="text" name="studentName" placeholder="Student Name" onChange={this.handleChange} /><br />
           E-Mail: <br />
-          <input type="text" name="studentEmail" placeholder="E-Mail Address" onChange={ this.handleChange } /><br />
+          <input type="text" name="studentEmail" placeholder="E-Mail Address" onChange={this.handleChange} /><br />
           Select A Campus: <br />
-          <select name="selectedCampus" form="Campuses" onChange={ this.handleChange }>
+          <select name="selectedCampus" form="Campuses" onChange={this.handleChange}>
             <option selected="true" disabled="disabled"> Campuses </option>
             {
-              campuses.length && campuses.map(campus => {
-                return (
-                  <option value={ campus.id } key={ campus.id }>{ campus.name }</option>
-                );
-              })
+              campuses.length && campuses.map(campus => (
+                <option value={campus.id} key={campus.id}>{ campus.name }</option>
+                ))
             }
           </select>
           <br />
@@ -69,3 +70,7 @@ export default class AddStudent extends Component {
     );
   }
 }
+
+const mapState = ({ students, campuses }) => ({ students, campuses });
+const mapDispatch = { createStudent };
+export default withRouter(connect(mapState, mapDispatch)(AddStudent));

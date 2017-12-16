@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 export default class AddCampus extends Component {
-  constructor () {
+  constructor() {
     super();
     this.state = {
       campusName: '',
-      campusImage: ''
-    }
+      campusImage: '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
